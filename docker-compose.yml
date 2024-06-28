@@ -1,0 +1,28 @@
+version: "3"
+services:
+  projectCar:
+    container_name: project-Car-container
+    build: .
+    ports:
+      - "3000:3000"
+    env-file:
+      - ./.env
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-db-car:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mas
+      MONGO_INITDB_ROOT_PASSWORD: id123mas
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+volumes:
+  mongo-db-car:
